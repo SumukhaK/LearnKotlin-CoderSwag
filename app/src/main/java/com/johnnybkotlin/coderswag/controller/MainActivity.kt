@@ -6,8 +6,10 @@ import android.util.Log
 import android.widget.Adapter
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.johnnybkotlin.coderswag.R
 import com.johnnybkotlin.coderswag.adapters.CategoryAdapter
+import com.johnnybkotlin.coderswag.adapters.CategoryRecylerAdapter
 import com.johnnybkotlin.coderswag.models.Category
 import com.johnnybkotlin.coderswag.services.DataServices
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,22 +18,17 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var adapter: ArrayAdapter<Category>
     lateinit var customAdapter : CategoryAdapter
+    lateinit var categoryRecAdapter : CategoryRecylerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //adapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,DataServices.categories)
-        customAdapter = CategoryAdapter(this@MainActivity,DataServices.categories)
+        val layoutManager = LinearLayoutManager(this)
+        categorylistview.layoutManager = layoutManager
+        categoryRecAdapter = CategoryRecylerAdapter(this,DataServices.categories)
+        categorylistview.adapter = categoryRecAdapter
 
-        //categorylistview.adapter = adapter
-        categorylistview.adapter = customAdapter
 
-
-        categorylistview.setOnItemClickListener { parent, view, position, id ->
-
-            val category = DataServices.categories[position]
-            Toast.makeText(this," Category you selected : ${category.title}..",Toast.LENGTH_LONG).show()
-        }
     }
 }
