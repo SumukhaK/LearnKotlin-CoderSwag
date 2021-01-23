@@ -2,8 +2,10 @@ package com.johnnybkotlin.coderswag.controller
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Adapter
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.johnnybkotlin.coderswag.R
 import com.johnnybkotlin.coderswag.adapters.CategoryAdapter
 import com.johnnybkotlin.coderswag.models.Category
@@ -25,5 +27,11 @@ class MainActivity : AppCompatActivity() {
         //categorylistview.adapter = adapter
         categorylistview.adapter = customAdapter
 
+
+        categorylistview.setOnItemClickListener { parent, view, position, id ->
+
+            val category = DataServices.categories[position]
+            Toast.makeText(this," Category you selected : ${category.title}..",Toast.LENGTH_LONG).show()
+        }
     }
 }
