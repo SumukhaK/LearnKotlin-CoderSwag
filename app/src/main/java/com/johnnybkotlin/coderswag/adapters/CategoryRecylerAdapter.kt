@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.johnnybkotlin.coderswag.R
 import com.johnnybkotlin.coderswag.models.Category
 
-class CategoryRecylerAdapter (val context: Context, val categories: List<Category>): RecyclerView.Adapter<CategoryRecylerAdapter.Holder>() {
+class CategoryRecylerAdapter (val context: Context, val categories: List<Category>, val itemClick: (Category) -> Unit): RecyclerView.Adapter<CategoryRecylerAdapter.Holder>() {
 
 
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View, val itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         val catergoryImage = itemView.findViewById<ImageView>(R.id.categoryimage)
         val catergoryName = itemView.findViewById<TextView>(R.id.categorytextView)
@@ -25,6 +25,8 @@ class CategoryRecylerAdapter (val context: Context, val categories: List<Categor
             catergoryImage.setImageResource(resourceId)
 
             catergoryName.text = category.title
+
+            itemView.setOnClickListener { (itemClick(category))}
         }
 
     }
@@ -32,7 +34,7 @@ class CategoryRecylerAdapter (val context: Context, val categories: List<Categor
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
         val view = LayoutInflater.from(context).inflate(R.layout.row_category_listitem,parent,false)
-        return Holder(view)
+        return Holder(view,itemClick)
 
     }
 
@@ -45,3 +47,5 @@ class CategoryRecylerAdapter (val context: Context, val categories: List<Categor
         return categories.count()
     }
 }
+
+

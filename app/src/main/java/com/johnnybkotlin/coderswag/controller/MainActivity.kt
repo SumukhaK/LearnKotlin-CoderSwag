@@ -15,9 +15,7 @@ import com.johnnybkotlin.coderswag.services.DataServices
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var adapter: ArrayAdapter<Category>
-    lateinit var customAdapter : CategoryAdapter
+    
     lateinit var categoryRecAdapter : CategoryRecylerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +24,13 @@ class MainActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         categorylistview.layoutManager = layoutManager
-        categoryRecAdapter = CategoryRecylerAdapter(this,DataServices.categories)
+        categoryRecAdapter = CategoryRecylerAdapter(this,DataServices.categories){
+
+                category ->
+
+            Toast.makeText(this@MainActivity," Selected category : ${category.title}",Toast.LENGTH_LONG).show()
+
+        }
         categorylistview.adapter = categoryRecAdapter
 
 
